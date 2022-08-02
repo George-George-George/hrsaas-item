@@ -8,3 +8,20 @@ export function login(data) {
   })
 }
 
+/// sys/profile
+
+export function getUserInfoApi() {
+  return request({
+      url:'/sys/profile',
+     method : 'POST',
+      
+  })
+}
+
+// 获取用户基本信息
+
+export function getUserBaseInfo(id) {
+  return request({
+      url:'/sys/user/' + id,
+  })
+}
