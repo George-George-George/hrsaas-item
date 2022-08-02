@@ -22,15 +22,16 @@
         <i class="svg-container">
           <svg-icon iconClass="password" />
         </i>
-        <el-input v-model="loginForm.password"> </el-input>
+        <el-input type="password" v-model="loginForm.password"> </el-input>
       </el-form-item>
 
       <el-button
         type="primary"
         class="loginBtn"
         style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"
-        >Login</el-button
+        @click="login"
+        :loading="isLogin"
+        >登录</el-button
       >
 
       <div class="tips">
@@ -47,8 +48,8 @@ export default {
   data() {
     return {
       loginForm: {
-        mobile: '',
-        password: ''
+        mobile: '13800000002',
+        password: '123456'
       },
       loginrules: {
         mobile: [
@@ -67,6 +68,22 @@ export default {
             trigger: 'blur'
           }
         ]
+      },
+      isLogin: false
+    }
+  },
+  methods: {
+    async login() {
+      try {
+        this.isLogin = true
+        await this.$refs.loginForm.validate()
+        await this.$store.dispatch('user/getToken', this.loginForm)
+        this.$router.push('/')
+        this.$message.success('登录成功')
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.isLogin = false
       }
     }
   }
