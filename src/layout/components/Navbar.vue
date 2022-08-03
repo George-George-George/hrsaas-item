@@ -18,6 +18,7 @@
           <img
             :src="$store.state.user.userInfo.staffPhoto"
             class="user-avatar"
+            v-imgError="defaultImg"
           />
           <i class="el-icon-caret-bottom" />
           <span>{{ $store.state.user.userInfo.username }}</span>
@@ -39,8 +40,14 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import defaultImg from '@/assets/404_images/下载.png'
 
 export default {
+  data() {
+    return {
+      defaultImg
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger
