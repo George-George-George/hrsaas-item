@@ -14,3 +14,34 @@ export function delDepartments(id) {
     method: 'delete'
   })
 }
+
+
+// /company/department
+
+export function postNewDepart(data) {
+    return request({
+        url: '/company/department',
+        method: 'POST',
+        data,
+    })
+}
+
+
+// /company/department/{id}
+
+export function getDetailDepts(id) {
+    return request({
+        url: `/company/department/${id}`,
+    })
+}
+
+
+// /company/department/{id}
+
+
+export function editDept(data) {
+    return request({
+        url: `/company/department/${data.id}`,
+        method: 'PUT',
+    })
+}
