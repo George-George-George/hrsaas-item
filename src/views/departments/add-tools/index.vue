@@ -160,14 +160,13 @@ export default {
           this.$emit('add-success')
         } else {
           this.formData.pid = this.currentNode.id
-
           await postNewDepart(this.formData)
           this.$message.success('成功')
           this.onClose()
           this.$emit('add-success')
         }
       } catch (error) {
-        this.$message.success('失败')
+        this.$message.fail('失败')
       }
     },
     async getDepartId(id) {

@@ -2,19 +2,11 @@
   <div class="login-container">
     <el-form
       ref="loginForm"
-<<<<<<< HEAD
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      auto-complete="on"
-      label-position="left"
-=======
       class="login-form"
       auto-complete="on"
       label-position="left"
       :model="loginForm"
       :rules="loginrules"
->>>>>>> department
     >
       <div class="title-container">
         <h3 class="title">
@@ -27,40 +19,6 @@
         <el-input v-model="loginForm.mobile"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-<<<<<<< HEAD
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon
-            :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
-          />
-        </span>
-      </el-form-item>
-
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"
-        >Login</el-button
-      >
-
-      <div class="tips">
-        <span style="margin-right: 20px">username: admin</span>
-        <span> password: any</span>
-=======
         <i class="svg-container">
           <svg-icon iconClass="password" />
         </i>
@@ -79,7 +37,6 @@
       <div class="tips">
         <span style="margin-right: 20px">账号: 13800000002</span>
         <span> 密码: 123456</span>
->>>>>>> department
       </div>
     </el-form>
   </div>
@@ -94,27 +51,6 @@ export default {
         mobile: '13800000002',
         password: '123456'
       },
-<<<<<<< HEAD
-      loginRules: {
-        username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
-        ],
-        password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
-        ]
-      },
-      loading: false,
-      passwordType: 'password',
-      redirect: undefined
-    }
-  },
-  watch: {
-    $route: {
-      handler: function (route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
-=======
       loginrules: {
         mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
@@ -134,7 +70,6 @@ export default {
         ]
       },
       isLogin: false
->>>>>>> department
     }
   },
   methods: {
@@ -151,31 +86,6 @@ export default {
       } finally {
         this.isLogin = false
       }
-<<<<<<< HEAD
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-=======
->>>>>>> department
     }
   }
 }
@@ -186,13 +96,8 @@ export default {
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg: #283443;
-<<<<<<< HEAD
-$light_gray: #fff;
-$cursor: #fff;
-=======
 $light_gray: #68b0fe;
 $cursor: #68b0fe;
->>>>>>> department
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {

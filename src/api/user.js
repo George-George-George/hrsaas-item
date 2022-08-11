@@ -1,11 +1,6 @@
 import request from '@/utils/request'
 
 export function login(data) {
-<<<<<<< HEAD
-
-}
-
-
   return request({
       url:'/sys/login',
             method : 'POST',
@@ -30,4 +25,3 @@ export function getUserBaseInfo(id) {
       url:'/sys/user/' + id,
   })
 }
->>>>>>> department

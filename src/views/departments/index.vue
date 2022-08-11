@@ -11,7 +11,6 @@
             manager: '负责人'
           }"
         />
-
         <el-tree :data="departs" :props="defaultProps" default-expand-all="">
           <template v-slot="{ data }">
             <tree_tools
@@ -83,7 +82,9 @@ export default {
     showEdit(val) {
       this.dialogVisible = true
       this.$refs.addDepts.getDepartId(val.id)
-    }
+    },
+
+    
   }
 }
 </script>
