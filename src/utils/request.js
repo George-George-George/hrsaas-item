@@ -8,7 +8,7 @@ import router from '@/router'
 function isTimeout(){
             const currentTime = Date.now()
             const TokenTime = getTokenTime()
-            const timeout = 3*1000*30
+            const timeout = 3*1000*30000
             return currentTime - TokenTime > timeout
 }
 
