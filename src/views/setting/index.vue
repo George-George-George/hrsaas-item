@@ -61,18 +61,21 @@
             :closable="false"
           >
           </el-alert>
-          <el-form ref="form" label-width="80px">
+          <el-form ref="form1" label-width="80px" :model="companyInfo">
             <el-form-item label="公司名称">
-              <el-input disabled></el-input>
+              <el-input disabled v-model="companyInfo.name"></el-input>
             </el-form-item>
             <el-form-item label="公司地址">
-              <el-input disabled></el-input>
+              <el-input
+                disabled
+                v-model="companyInfo.companyAddress"
+              ></el-input>
             </el-form-item>
             <el-form-item label="公司邮箱">
-              <el-input disabled></el-input>
+              <el-input disabled v-model="companyInfo.mailbox"></el-input>
             </el-form-item>
             <el-form-item label="备注">
-              <el-input disabled></el-input>
+              <el-input disabled v-model="companyInfo.remarks"></el-input>
             </el-form-item> </el-form
         ></el-tab-pane>
       </el-tabs>
@@ -96,7 +99,8 @@ export default {
       form: { name: '', des: '' },
       formRules: {
         name: [{ required: true, message: '请输入活动名称', trigger: 'blur' }]
-      }
+      },
+      companyInfo: {}
     }
   },
 
@@ -138,6 +142,7 @@ export default {
         this.$store.state.user.userInfo.companyId
       )
       console.log(res)
+      this.companyInfo = res
     }
   }
 }
