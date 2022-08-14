@@ -11,7 +11,7 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-
+import * as filters from '@/filters'
 import '@/icons' // icon
 import '@/permission' // permission control
 import * as directives from '@/directive'
@@ -37,6 +37,11 @@ Vue.config.productionTip = false
 for (let key in directives){
   Vue.directive(key, directives[key]);
 }
+
+for (let key in filters){
+  Vue.filter(key, filters[key]);
+}
+
 new Vue({
   el: '#app',
   router,
