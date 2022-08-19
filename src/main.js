@@ -27,6 +27,8 @@ if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
+import Print from 'vue-print-nb'
+ Vue.use(Print)
 import components from '@/components'
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })

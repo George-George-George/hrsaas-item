@@ -43,3 +43,41 @@ export function importEmployee(data) {
         data,
     })
 }
+
+
+export function getUserDetail(id){
+    return request({
+        url: '/sys/user/' + id,
+    })
+}
+
+
+/** *
+ *  读取用户详情的基础信息
+ * **/
+export function getPersonalDetail(id) {
+  return request({
+    url: `/employees/${id}/personalInfo`
+  })
+}
+
+
+/** *
+ *  更新用户详情的基础信息
+ * **/
+export function updatePersonal(id) {
+  return request({
+    url: `/employees/${id}/personalInfo`,
+  })
+}
+
+
+// 更新用户简单信息
+
+export function setUserDetail(data) {
+ return request({
+  url: `/employees/${data.userId}/personalInfo`,
+  method: 'put',
+  data,
+ })
+}

@@ -29,6 +29,7 @@
                 :src="row.staffPhoto"
                 v-imgError="require('@/assets/common/head.jpg')"
                 style="width: 100px; height: 100px"
+                @click="showErCodeDialog(row.staffPhoto)"
               />
             </template>
           </el-table-column>
@@ -53,7 +54,12 @@
           </el-table-column>
           <el-table-column label="操作" sortable fixed="right" width="280">
             <template slot-scope="{ row }">
-              <el-button type="text" size="small">查看</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="$router.push(`/employees/details/${row.id}`)"
+                >查看</el-button
+              >
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
@@ -83,6 +89,9 @@
         </el-row>
       </el-card>
     </div>
+    <el-dialog title="123" :visible.sync="dialogVisible" width="30%">
+      <canvas id="canvas"></canvas>
+    </el-dialog>
     <addem @add-success="getEmployeesInfoList" :visible.sync="showAdd" />
   </div>
 </template>
@@ -92,6 +101,7 @@ import { getEmployeesInfoList, delEmployees } from '@/api/employees'
 import employees from '@/constant/employees'
 import addem from './components/addem.vue'
 const { exportExcelMapPath, hireType } = employees
+import QRCode from 'qrcode'
 export default {
   data() {
     return {
@@ -101,7 +111,8 @@ export default {
         size: 5
       },
       total: 0,
-      showAdd: false
+      showAdd: false,
+      dialogVisible: false
     }
   },
 
@@ -157,6 +168,16 @@ export default {
           autoWidth: true, //非必填
           bookType: 'xlsx' //非必填
         })
+      })
+    },
+    showErCodeDialog(val) {
+      if (!val) {
+        return this.$message.error('请上传图片')
+      }
+      this.dialogVisible = true
+      this.$nextTick(() => {
+        const canvas = document.getElementById('canvas')
+        QRCode.toCanvas(canvas, val)
       })
     }
   },
