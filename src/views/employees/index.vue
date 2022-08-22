@@ -8,12 +8,17 @@
             size="small"
             type="warning"
             @click="$router.push('/import')"
+            v-isHas="points.employees.import"
             >导入</el-button
           >
           <el-button size="small" type="danger" @click.native="exportExcel"
             >导出</el-button
           >
-          <el-button size="small" type="primary" @click.native="showAdd = true"
+          <el-button
+            size="small"
+            type="primary"
+            @click.native="showAdd = true"
+            v-if="isHas(points.employees.add)"
             >新增员工</el-button
           >
         </template>
@@ -63,11 +68,14 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="showRole(row.id)"
+                >角色</el-button
+              >
               <el-button
                 type="text"
                 size="small"
                 @click="delEmployeesFn(row.id)"
+                v-if="!points.employees.del"
                 >删除</el-button
               >
             </template>
@@ -92,6 +100,7 @@
     <el-dialog title="123" :visible.sync="dialogVisible" width="30%">
       <canvas id="canvas"></canvas>
     </el-dialog>
+    <addRole :rolesId="rolesId" :visible.sync="showRoleInfo" />
     <addem @add-success="getEmployeesInfoList" :visible.sync="showAdd" />
   </div>
 </template>
@@ -99,9 +108,12 @@
 <script>
 import { getEmployeesInfoList, delEmployees } from '@/api/employees'
 import employees from '@/constant/employees'
+import addRole from './components/add-role.vue'
 import addem from './components/addem.vue'
 const { exportExcelMapPath, hireType } = employees
 import QRCode from 'qrcode'
+import mixinsPermissions from '@/mixins/permission'
+
 export default {
   data() {
     return {
@@ -112,9 +124,12 @@ export default {
       },
       total: 0,
       showAdd: false,
-      dialogVisible: false
+      dialogVisible: false,
+      showRoleInfo: false,
+      rolesId: ''
     }
   },
+  mixins: [mixinsPermissions],
 
   created() {
     this.getEmployeesInfoList()
@@ -179,10 +194,15 @@ export default {
         const canvas = document.getElementById('canvas')
         QRCode.toCanvas(canvas, val)
       })
+    },
+    showRole(id) {
+      this.showRoleInfo = true
+      this.rolesId = id
     }
   },
   components: {
-    addem
+    addem,
+    addRole
   }
 }
 </script>

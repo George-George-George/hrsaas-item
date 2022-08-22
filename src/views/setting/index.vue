@@ -3,7 +3,10 @@
     <div class="app-container">
       <el-tabs v-model="activeName">
         <el-tab-pane label="用户管理" name="first">
-          <el-button type="primary" @click="adddialogVisible = true"
+          <el-button
+            type="primary"
+            @click="adddialogVisible = true"
+            v-if="isHas(points.roles.add)"
             >新增人员</el-button
           >
           <el-table border :data="tableData" style="width: 100%">
@@ -12,8 +15,13 @@
             <el-table-column prop="name" label="角色"> </el-table-column>
             <el-table-column prop="description" label="描述"> </el-table-column>
             <el-table-column prop="doin" label="操作">
-              <template>
-                <el-button size="small" type="success">分配权限</el-button>
+              <template slot-scope="{ row }">
+                <el-button
+                  size="small"
+                  type="success"
+                  @click="showAssignRoles(row.id)"
+                  >分配权限</el-button
+                >
                 <el-button size="small" type="primary">编辑</el-button>
                 <el-button size="small" type="danger">删除</el-button>
               </template>
@@ -80,13 +88,37 @@
         ></el-tab-pane>
       </el-tabs>
     </div>
+    <el-dialog
+      title="给角色分配权限"
+      :visible.sync="showRoles"
+      width="50%"
+      destroy-on-close
+      @close="setRolesPer"
+    >
+      <el-tree
+        :data="permissions"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        :default-checked-keys="defaultCheckKeys"
+        :props="{ label: 'name' }"
+        ref="perTree"
+      >
+      </el-tree>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showRoles = false">取 消</el-button>
+        <el-button type="primary" @click="Onsave">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getRolesApi, addRoles } from '@/api/roles'
+import { getRolesApi, addRoles, assignRolesPem, assignPerm } from '@/api/roles'
 import { getCompanyInfo } from '@/api/setting'
-
+import { getPermissionList } from '@/api/permission'
+import { tranListToTreeData } from '@/utils'
+import mixinsPermissions from '@/mixins/permission'
 export default {
   data() {
     return {
@@ -100,13 +132,18 @@ export default {
       formRules: {
         name: [{ required: true, message: '请输入活动名称', trigger: 'blur' }]
       },
-      companyInfo: {}
+      companyInfo: {},
+      showRoles: false,
+      permissions: [],
+      defaultCheckKeys: [],
+      rolesId: 1
     }
   },
-
+  mixins: [mixinsPermissions],
   created() {
     this.getRoles()
     this.getCompanyInfo()
+    this.getPermissionList()
   },
 
   methods: {
@@ -141,8 +178,29 @@ export default {
       const res = await getCompanyInfo(
         this.$store.state.user.userInfo.companyId
       )
-      console.log(res)
       this.companyInfo = res
+    },
+    async showAssignRoles(id) {
+      this.rolesId = id
+      this.showRoles = true
+      const res = await assignRolesPem(id)
+      this.defaultCheckKeys = res.permIds
+    },
+    async getPermissionList() {
+      const res = await getPermissionList()
+      const transPermission = tranListToTreeData(res, '0')
+      this.permissions = transPermission
+    },
+    setRolesPer() {
+      this.defaultCheckKeys = []
+    },
+    async Onsave() {
+      this.showRoles = false
+      await assignPerm({
+        id: this.rolesId,
+        permIds: this.$refs.perTree.getCheckedKeys()
+      })
+      this.$message.success('分配成功')
     }
   }
 }

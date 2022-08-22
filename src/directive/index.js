@@ -1,3 +1,4 @@
+import store from '@/store'
 export  const imgError = {
      inserted:function(el,{value}){
        if(!el.src){
@@ -15,4 +16,11 @@ export  const imgError = {
        }
   },
 }
-
+export const isHas = {
+  inserted(el,value) {
+    const res = store.state.permission.points.includes(value)
+    if(!res){
+      el.remove()
+    }
+}
+}

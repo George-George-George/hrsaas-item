@@ -16,3 +16,20 @@ export function addRoles(data) {
         data,
     })
 }
+
+
+export function assignRolesPem(id) {
+    return request({
+        url: '/sys/role/'+ id,
+   
+    })
+}
+
+
+export function assignPerm(data) {
+    return request({
+        url: '/sys/role/assignPrem',
+        method:'put',
+        data
+    })
+}
