@@ -14,15 +14,15 @@ export default {
   props: {
     collapse: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       title: 'Vue Admin Template',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png',
     }
-  }
+  },
 }
 </script>
 
@@ -42,7 +42,6 @@ export default {
   height: 50px;
   line-height: 50px;
   // background: #2b2f3a;
-  // background: red;
   text-align: center;
   overflow: hidden;
 
@@ -50,7 +49,8 @@ export default {
     height: 100%;
     width: 100%;
 
-    & .sidebar-logo {
+    // 大图样式
+    .sidebar-logo {
       width: 140px;
       vertical-align: middle;
       margin-right: 12px;
@@ -68,6 +68,7 @@ export default {
     }
   }
 
+  // 小图样式
   &.collapse {
     .sidebar-logo {
       margin-right: 0px;

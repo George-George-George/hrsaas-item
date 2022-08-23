@@ -1,11 +1,14 @@
-import PageTool from "./PageTools"
-import UpLoadExcel from './UpLoadExcel'
-import UpLoadImg from './UpLoadImg'
-const components = [PageTool,UpLoadExcel,UpLoadImg]
-export default{ 
-install(Vue){
-       components.forEach(component =>{
-           Vue.component(component.name, component)
-       })
-}
+import PageTools from '@/components/PageTools'
+import MyTest from '@/components/MyTest'
+import UploadExcel from '@/components/UploadExcel'
+import UploadImg from '@/components/UploadImg'
+import fullscreen from '@/components/FullScreen'
+import ToggleLang from '@/components/ToggleLang'
+const components = [PageTools, MyTest, UploadExcel, UploadImg,fullscreen,ToggleLang]
+export default {
+  install(Vue) {
+    components.forEach((component) => {
+      Vue.component(component.name, component)
+    })
+  },
 }
